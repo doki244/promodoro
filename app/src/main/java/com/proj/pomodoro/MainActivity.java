@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity  {
     static long sum_focus;
     static long sum_break;
     long resttime = 0;
-    int curent_set=1;
+    static int curent_set=1;
     ImageView addpromo;
     Button startbtn;
     Button stopbtn;
@@ -117,9 +117,9 @@ public class MainActivity extends AppCompatActivity  {
                         //breakStart();
                         break_time=true;
                         Intent intent =new Intent(MainActivity.this,break_activi.class);
-                        finish();
                         //getIntent().putExtra("break_time",true);
                         startActivity(intent);
+                        dialogInterface.dismiss();
 //                        countDownTimer = new CountDownTimer(selected.getShort_rest()*60000, 1000) {
 //
 //                            public void onTick(long millisUntilFinished) {
@@ -140,6 +140,9 @@ public class MainActivity extends AppCompatActivity  {
                 }).setNegativeButton("skip", R.drawable.add_circle_24, new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
+                        if (curent_set > selected.getShort_rest_step())
+                            curent_set=1;
+                        curentSet.setText(curent_set+"");
                         dialogInterface.dismiss();
                     }
                 })
@@ -239,10 +242,8 @@ public void starttimer(Activity_promo activity_promo,String type){
                     TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(activity_promo.getMin()*60000)));
             focusStop();
             mDialog.show();
-            if (curent_set<selected.getShort_rest_step()){
-                curent_set++;
-                curentSet.setText(curent_set+"");
-            }
+            curent_set++;
+            curentSet.setText(curent_set+"");
             clock.clearAnimation();
             stopbtn.setVisibility(View.GONE);
             startbtn.setVisibility(View.VISIBLE);
@@ -288,22 +289,10 @@ public static void init_timer(Activity_promo activity_promo){
             customHandler.postDelayed(this, 1000);
         }
     };
-    public void breakStart() {
-        startTime = SystemClock.uptimeMillis();
-        customHandler.postDelayed(TimerThread, 0);
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //save
     }
-
-    public void breakStop() {
-        customHandler.removeCallbacks(TimerThread);
-        sum_break+=resttime;
-    }
-
-    private Runnable TimerThread = new Runnable() {
-        public void run() {
-            resttime = SystemClock.uptimeMillis() - startTime;
-
-            //min_view.setText(getDateFromMillis(timeInMilliseconds));
-            customHandler.postDelayed(this, 1000);
-        }
-    };
 }
