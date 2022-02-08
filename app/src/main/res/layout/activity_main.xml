@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity"
+    >
+
+     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0c243c"
+        android:id="@+id/ConstraintLayout">
+
+
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             android:layout_height="wrap_content"
+             android:layout_centerInParent="true"
+            >
+             <include
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:id="@+id/include"
+                 app:layout_anchorGravity="bottom|end"
+                 android:layout_centerInParent="true"
+                 layout="@layout/bottom_sheet"
+                  />
+
+         </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/sec_view"
+            android:layout_width="74dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="124dp"
+            android:gravity="center"
+            android:text="00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_44sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clock" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="44dp"
+            android:layout_height="69dp"
+            android:layout_marginEnd="184dp"
+            android:gravity="center|top"
+            android:text=":"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_44sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clock" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/_185sdp"
+            android:layout_height="@dimen/_165sdp"
+            android:layout_marginStart="@dimen/_26sdp"
+            android:layout_marginTop="56dp"
+            android:layout_marginEnd="@dimen/_26sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bgcircle" />
+
+        <ImageView
+            android:id="@+id/clock"
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="@dimen/_229sdp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="56dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.461"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icanchor" />
+
+        <TextView
+            android:id="@+id/min_view"
+            android:layout_width="74dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="212dp"
+            android:gravity="center"
+            android:text="00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_44sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clock" />
+
+
+
+        <Button
+            android:id="@+id/stoptbtn"
+            android:layout_width="269dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="@dimen/_54sdp"
+            android:layout_marginEnd="@dimen/_54sdp"
+            android:layout_marginBottom="108dp"
+            android:background="@drawable/bgbtnred"
+            android:text="stop"
+            android:visibility="invisible"
+            android:textSize="@dimen/_17sdp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/start"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:layout_width="269dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="@dimen/_54sdp"
+            android:layout_marginEnd="@dimen/_54sdp"
+            android:layout_marginBottom="108dp"
+            android:backgroundTint="@null"
+            android:visibility="visible"
+            android:background="@drawable/bgbtngreen"
+            android:text="Start"
+            android:textSize="@dimen/_17sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="186dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="112dp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_26sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sec_view" />
+
+        <TextView
+            android:id="@+id/curent_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:text="1 "
+            app:layout_constraintStart_toEndOf="@+id/sec_view"
+            app:layout_constraintTop_toBottomOf="@+id/clock" />
+        <TextView
+            android:id="@+id/sets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+
+            android:text="of "
+            app:layout_constraintStart_toEndOf="@+id/sec_view"
+            app:layout_constraintTop_toBottomOf="@+id/clock" />
+        <TextView
+            android:id="@+id/total_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_28sdp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:text="4"
+            app:layout_constraintStart_toEndOf="@+id/sec_view"
+            app:layout_constraintTop_toBottomOf="@+id/clock" />
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
