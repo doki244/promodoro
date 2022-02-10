@@ -12,21 +12,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class break_activi extends AppCompatActivity {
     Handler customHandler = new Handler();
-    long startTime,resttime;
+    long startTime;
+    static long resttime;
     static long sum_break;
     TextView min_view,sec_view;
     CountDownTimer countDownTimer;
+    ResultDataAccess result_access = new ResultDataAccess(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_break);
         sec_view = findViewById(R.id.sec_view);
         min_view = findViewById(R.id.min_view);
-
         Log.i("curent_set", curent_set+"");
         if (curent_set > MainActivity.selected.getShort_rest_step()) {
             curent_set=1;
@@ -74,4 +76,17 @@ public class break_activi extends AppCompatActivity {
             customHandler.postDelayed(this, 1000);
         }
     };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        if(!MainActivity.saved){
+//            result_access.openDB();
+//            result_access.addNewresult(new result_time(MainActivity.selected.getTitle(),MainActivity.focustime,break_activi.resttime,new Date()));
+//            MainActivity.focustime = 0 ;
+//            resttime=0;
+//            result_access.closeDB();
+//
+//        }
+    }
 }

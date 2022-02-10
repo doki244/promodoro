@@ -4,19 +4,19 @@ import java.util.Date;
 
 public class result_time {
     private String title;
-    private int total_focus_time;
-    private int total_rest;
+    private long total_focus_time;
+    private long total_rest;
     private Date date;
     private int id;
 
-    public result_time(String title, int focus_time, int total_rest, Date date, int id) {
+    public result_time(String title, long focus_time, long total_rest, Date date, int id) {
         this.title = title;
         this.total_focus_time = focus_time;
         this.total_rest = total_rest;
         this.date = date;
         this.id = id;
     }
-    public result_time(String title, int focus_time, int total_rest,  Date date) {
+    public result_time(String title, long focus_time, long total_rest,  Date date) {
         this.title = title;
         this.total_focus_time = focus_time;
         this.total_rest = total_rest;
@@ -43,7 +43,7 @@ public class result_time {
         this.total_focus_time = focus_time;
     }
 
-    public int getTotal_rest() {
+    public long getTotal_rest() {
         return total_rest;
     }
 
@@ -51,7 +51,7 @@ public class result_time {
         this.total_rest = total_rest;
     }
 
-    public int getTotal_focus_time() {
+    public long getTotal_focus_time() {
         return total_focus_time;
     }
 

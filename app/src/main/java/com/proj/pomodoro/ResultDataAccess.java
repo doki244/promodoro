@@ -35,15 +35,15 @@ public class ResultDataAccess {
     public boolean addNewresult(result_time model){
         try {
             String TITLE = model.getTitle();
-            int total_focus_time = model.getTotal_focus_time();
-            int  total_rest = model.getTotal_rest();
-            Date date = model.getDate();
+            long total_focus_time = model.getTotal_focus_time();
+            long  total_rest = model.getTotal_rest();
+            Date date = new Date();
             ContentValues cv = new ContentValues();
             String time_str = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(date);
             Log.i("time_str", time_str);
             cv.put(DB.RES_TITLE,TITLE);
-            cv.put(DB.TOTAL_FOCUS,total_focus_time);
-            cv.put(DB.TOTAL_REST,total_rest);
+            cv.put(DB.TOTAL_FOCUS,(int)total_focus_time);
+            cv.put(DB.TOTAL_REST,(int)total_rest);
             cv.put(DB.DATE,time_str);
             database.insert(DB.RESULT_TABLE_NAME,null,cv);
             return true;
@@ -53,7 +53,7 @@ public class ResultDataAccess {
         }
     }
     @SuppressLint("Range")
-    public ArrayList<result_time> getall() throws ParseException {
+    public ArrayList<result_time> getall()  {
         String TITLE;
         int total_focus_time;
         int  total_rest ;
@@ -70,8 +70,14 @@ public class ResultDataAccess {
                 id = cursor.getInt(cursor.getColumnIndex(DB.RES_ID));
                 TITLE = cursor.getString(cursor.getColumnIndex(DB.RES_TITLE));
                 //String string = "January 2, 2010";
-                Date thedate = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH).parse(date);
-                arrayList.add(new result_time(TITLE,total_focus_time,total_rest,thedate,id));
+                try {
+                    Date thedate = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH).parse(date);
+                    arrayList.add(new result_time(TITLE,total_focus_time,total_rest,thedate,id));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
             }while (cursor.moveToNext());
         }
         return arrayList;

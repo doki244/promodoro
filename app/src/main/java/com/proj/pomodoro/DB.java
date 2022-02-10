@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class DB extends SQLiteOpenHelper {
     public static final String DB_NAME = "pomodoro.db";
-    public static final int DB_VERSION =2;
+    public static final int DB_VERSION =3;
     //Activity table
     public static final String TABLE_NAME = "pomodoro";
     public static final String ID = "id";
@@ -31,6 +31,13 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        String query2  = "CREATE TABLE IF NOT EXISTS " + RESULT_TABLE_NAME + " ( " +
+            RES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+            RES_TITLE + " TEXT , " +
+            DATE + " TEXT , " +
+            TOTAL_REST + " INTEGER , " +
+            TOTAL_FOCUS + " INTEGER ) ";
+        sqLiteDatabase.execSQL(query2);
         String query  = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ( " +
                 ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 TITLE + " TEXT , " +
@@ -40,20 +47,16 @@ public class DB extends SQLiteOpenHelper {
                 SHORT_REST_STEP + " INTEGER ) ";
 
         sqLiteDatabase.execSQL(query);
-        String query2  = "CREATE TABLE IF NOT EXISTS " + RESULT_TABLE_NAME + " ( " +
-                RES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                RES_TITLE + " TEXT , " +
-                DATE + " TEXT , " +
-                TOTAL_REST + " INTEGER , " +
-                TOTAL_FOCUS + " INTEGER ) ";
 
-        sqLiteDatabase.execSQL(query2);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         String query = "DROP TABLE IF EXISTS " + TABLE_NAME ;
         sqLiteDatabase.execSQL(query);
+        //onCreate(sqLiteDatabase);
+        String query2 = "DROP TABLE IF EXISTS " + RESULT_TABLE_NAME ;
+        sqLiteDatabase.execSQL(query2);
         onCreate(sqLiteDatabase);
     }
 }

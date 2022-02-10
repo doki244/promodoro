@@ -26,13 +26,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
 public class MainActivity extends AppCompatActivity  {
-    //private static TextView min_view;
     Animation round;
     Animation alpha;
     Animation btn_anim;
@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity  {
     ImageView imageView;
     Handler customHandler = new Handler();
     long startTime;
-    long focustime;
+    static long focustime;
     static long sum_focus;
     static long sum_break;
-    long resttime = 0;
+    //long resttime = 0;
     static int curent_set=1;
     ImageView addpromo;
     Button startbtn;
@@ -53,8 +53,10 @@ public class MainActivity extends AppCompatActivity  {
     MaterialDialog mDialog;
     RecyclerView recyclerView_bottom;
     LottieAnimationView rest_anim;
+    public static boolean saved =true;
     public static Activity_promo selected;
     ActivityDataAccess access = new ActivityDataAccess(this);
+    ResultDataAccess result_access = new ResultDataAccess(this);
     adapter ada ;
     private boolean break_time=false;
     CountDownTimer countDownTimer;
@@ -158,6 +160,7 @@ public class MainActivity extends AppCompatActivity  {
                 startbtn.setVisibility(View.GONE);//60000
                 starttimer(selected,"focus");
                 focusStart();
+                saved=false;
             }
         });
         stopbtn.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +170,13 @@ public class MainActivity extends AppCompatActivity  {
                 stopbtn.setVisibility(View.GONE);
                 startbtn.setVisibility(View.VISIBLE);
                 focusStop();
+                saved=true;
                 countDownTimer.cancel();
+                result_access.openDB();
+                result_access.addNewresult(new result_time(selected.getTitle(),focustime,break_activi.resttime,new Date()));
+                focustime = 0 ;
+                break_activi.resttime=0;
+                result_access.closeDB();
             }
         });
         addpromo.setOnClickListener(new View.OnClickListener() {
@@ -293,6 +302,17 @@ public static void init_timer(Activity_promo activity_promo){
     @Override
     protected void onStop() {
         super.onStop();
-        //save
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!saved){
+            result_access.openDB();
+            result_access.addNewresult(new result_time(selected.getTitle(),focustime,break_activi.resttime,new Date()));
+            result_access.closeDB();
+        }
     }
 }
