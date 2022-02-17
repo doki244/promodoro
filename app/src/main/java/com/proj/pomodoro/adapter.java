@@ -45,6 +45,7 @@ public class adapter extends RecyclerView.Adapter<adapter.holder> {
 //                Activity activity = (Activity) view.getContext();
 //                activity.finish();
                 MainActivity.selected=promodoro.get(position);
+                MainActivity.curent_set = 1;
                 MainActivity.init_timer(promodoro.get(position));
                 //view.getContext().startActivity(intent);
             }

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mohammedalaa.seekbar.OnRangeSeekBarChangeListener;
 import com.mohammedalaa.seekbar.RangeSeekBarView;
@@ -110,14 +111,18 @@ public class add extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 title= name.getText().toString();
-                Activity_promo test = new Activity_promo(title,min,short_break,long_break,Short_rest_step);
-                access.openDB();
-                access.addNewACTIVITY(test);
-                //ArrayList<Activity_promo> arrayList = access.getall();
-                access.closeDB();
-                Intent intent = new Intent(add.this,MainActivity.class);
-                startActivity(intent);
-                finish();
+                //if (title.isEmpty()){
+                    Toast.makeText(add.this, "please fill name", Toast.LENGTH_SHORT).show();
+                //}else {
+                    Activity_promo test = new Activity_promo(title, min, short_break, long_break, Short_rest_step);
+                    access.openDB();
+                    access.addNewACTIVITY(test);
+                    //ArrayList<Activity_promo> arrayList = access.getall();
+                    access.closeDB();
+                    Intent intent = new Intent(add.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                //}
             }
         });
     }

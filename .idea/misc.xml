@@ -12,10 +12,11 @@
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/activity_add.xml" value="0.2" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/activity_break.xml" value="0.176" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/activity_statistics.xml" value="0.1640625" />
+        <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/activity_statistics.xml" value="0.2" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/bottom_sheet.xml" value="0.2" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/content_main.xml" value="0.25" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/item.xml" value="0.6" />
+        <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/row.xml" value="0.25" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/menu/nav.xml" value="0.15" />
       </map>
     </option>

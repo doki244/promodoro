@@ -5,25 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".statistics">
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/BarChart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="320dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/piechart"
         android:layout_width="416dp"
         android:layout_height="274dp"
-        android:layout_marginTop="328dp"
+        android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_7sdp"
+
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="213dp"
+        android:orientation="vertical"
+        android:padding="@dimen/_3sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

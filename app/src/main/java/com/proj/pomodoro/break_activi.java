@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -19,6 +20,7 @@ public class break_activi extends AppCompatActivity {
     Handler customHandler = new Handler();
     long startTime;
     static long resttime;
+    Button skip;
     static long sum_break;
     TextView min_view,sec_view;
     CountDownTimer countDownTimer;
@@ -28,6 +30,7 @@ public class break_activi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_break);
         sec_view = findViewById(R.id.sec_view);
+        skip = findViewById(R.id.Skip);
         min_view = findViewById(R.id.min_view);
         Log.i("curent_set", curent_set+"");
         if (curent_set > MainActivity.selected.getShort_rest_step()) {
@@ -36,6 +39,13 @@ public class break_activi extends AppCompatActivity {
             //curentSet.setText(curent_set + "");
         }else
             starttimer(MainActivity.selected.getShort_rest());
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                breakStop();
+                finish();
+            }
+        });
     }
     public void starttimer(int rest) {
         breakStart();

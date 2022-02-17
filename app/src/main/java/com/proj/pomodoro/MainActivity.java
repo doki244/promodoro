@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -87,11 +89,30 @@ public class MainActivity extends AppCompatActivity  {
         title_text = findViewById(R.id.title_text);
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
-        Activity_promo test = new Activity_promo("reading",24,4,15,4);
+
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        if (sharedPref.getInt("first_time",-1)==-1){
+            access.openDB();
+            Activity_promo test = new Activity_promo("reading",25,4,15,4);
+            access.addNewACTIVITY(test);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            selected=test;
+            init_timer(test);
+            editor.putInt("first_time", 1);
+            editor.apply();
+            access.closeDB();
+        }else {
+            access.openDB();
+            ArrayList<Activity_promo> arrayList = access.getall();
+            access.closeDB();
+            Log.i("1234111", arrayList.size()+"onCreate: ");
+            selected=arrayList.get(0);
+            init_timer(arrayList.get(0));
+        }
         access.openDB();
-        //access.addNewACTIVITY(test);
         ArrayList<Activity_promo> arrayList = access.getall();
         access.closeDB();
+
         Log.i("TAG", arrayList.toString());
 
 

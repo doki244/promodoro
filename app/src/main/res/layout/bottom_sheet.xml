@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_230sdp"
         android:orientation="vertical"
         android:background="@drawable/bottom_sheet"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
@@ -39,9 +39,10 @@
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_5sdp"
                 android:layout_gravity="center"
-                android:layout_marginStart="186dp"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,9 +50,10 @@
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_5sdp"
                 android:layout_gravity="center"
-                android:layout_marginStart="186dp"
                 android:layout_marginTop="4dp"
                 android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -59,9 +61,10 @@
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_5sdp"
                 android:layout_gravity="center"
-                android:layout_marginStart="186dp"
                 android:layout_marginTop="15dp"
                 android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view" />
 
