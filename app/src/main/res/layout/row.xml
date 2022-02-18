@@ -24,111 +24,198 @@
             android:padding="@dimen/_8sdp"
             android:textSize="@dimen/_11ssp"
             />
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+
+            android:background="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dit_title" />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp"
             android:id="@+id/expand"
         >
-
-            <TextView
-                android:id="@+id/totalrest_tx"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/totres"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Rest"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="1dp"
+
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/totalfocus_tx"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_22sdp"
-                android:layout_marginTop="1dp"
-                android:text="Total focus"
-                app:layout_constraintStart_toEndOf="@+id/totalrest_tx"
-                app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:id="@+id/day_tx"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_22sdp"
-                android:layout_marginTop="1dp"
-                android:text="Day"
-                app:layout_constraintStart_toEndOf="@+id/totalfocus_tx"
-                app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:id="@+id/week_tx"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_22sdp"
-                android:layout_marginTop="1dp"
-                android:text="Week"
-                app:layout_constraintStart_toEndOf="@+id/day_tx"
-                app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:id="@+id/month_tx"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_22sdp"
-                android:layout_marginTop="1dp"
-                android:text="Month"
-                app:layout_constraintStart_toEndOf="@+id/week_tx"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/totalrest_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="Total rest"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/totalrest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5M"
-                android:layout_marginStart="@dimen/_12sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/totalrest_tx" />
+                <TextView
+                    android:id="@+id/totalrest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="10M"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/totalrest_tx" />
 
-            <TextView
-                android:id="@+id/totalfocus"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/eeeee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="1dp"
-                android:text="10M"
-                app:layout_constraintStart_toEndOf="@+id/totalrest"
-                app:layout_constraintTop_toBottomOf="@+id/totalrest_tx" />
-            <TextView
-                android:id="@+id/day"
+                app:layout_constraintStart_toEndOf="@+id/totres"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/totalfocus_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="Total focus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/totalfocus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="10M"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/totalfocus_tx" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/da"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_37sdp"
+                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="1dp"
-                android:text="10M"
-                app:layout_constraintStart_toEndOf="@+id/totalfocus"
-                app:layout_constraintTop_toBottomOf="@+id/totalrest_tx" />
-            <TextView
-                android:id="@+id/week"
+                app:layout_constraintStart_toEndOf="@+id/eeeee"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="10M"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day_tx" />
+
+                <TextView
+                    android:id="@+id/day_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="Day"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"  />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/wee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="1dp"
-                android:text="10M"
-                app:layout_constraintStart_toEndOf="@+id/day"
-                app:layout_constraintTop_toBottomOf="@+id/totalrest_tx" />
-            <TextView
-                android:id="@+id/month"
+                app:layout_constraintStart_toEndOf="@+id/da"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="10M"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/week_tx" />
+
+                <TextView
+                    android:id="@+id/week_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="Week"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"  />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_29sdp"
                 android:layout_marginTop="1dp"
-                android:text="10M"
-                app:layout_constraintStart_toEndOf="@+id/week"
-                app:layout_constraintTop_toBottomOf="@+id/totalrest_tx" />
+                app:layout_constraintStart_toEndOf="@+id/wee"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="10M"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/month_tx" />
+
+                <TextView
+                    android:id="@+id/month_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:text="Month"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"  />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

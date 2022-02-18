@@ -222,6 +222,7 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.nav, menu);
+        menu.getItem(0).setIcon(R.drawable.report);
         return true;
     }
 

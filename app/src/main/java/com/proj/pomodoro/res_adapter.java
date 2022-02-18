@@ -61,7 +61,11 @@ public class res_adapter extends RecyclerView.Adapter<res_adapter.res_holder> {
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (holder.ConstraintLayout.getVisibility()==View.VISIBLE){
+                    holder.ConstraintLayout.setVisibility(View.GONE);
+                }else {
+                    holder.ConstraintLayout.setVisibility(View.VISIBLE);
+                }
 //                Activity activity = (Activity) view.getContext();
 //                activity.finish();
                 //MainActivity.selected=result.get(position);
@@ -97,6 +101,7 @@ public class res_adapter extends RecyclerView.Adapter<res_adapter.res_holder> {
     static class res_holder extends RecyclerView.ViewHolder{
         TextView title  ,month,day,total_rest,total_focus, week;
         LinearLayout layout;
+        ConstraintLayout ConstraintLayout;
 
         res_holder(@NonNull View itemView) {
             super(itemView);
@@ -107,6 +112,8 @@ public class res_adapter extends RecyclerView.Adapter<res_adapter.res_holder> {
             total_focus = itemView.findViewById(R.id.totalfocus);
             total_rest = itemView.findViewById(R.id.totalrest);
             layout = itemView.findViewById(R.id.dit_layout);
+            ConstraintLayout = itemView.findViewById(R.id.expand);
+
         }
         @RequiresApi(api = Build.VERSION_CODES.O)
         void set_note(result_time res) throws ParseException {
@@ -135,11 +142,11 @@ public class res_adapter extends RecyclerView.Adapter<res_adapter.res_holder> {
             int w_sum=0;
             int m_sum=0;
             for (result_time p:dirty_result) {
-
-                //for (int a = 0; a < dirty_result.size(); a++) {
                 if (p.getTitle().equals(res.getTitle())){
                     if (p.getDate().equals(theday)){
+
                         d_sum+=p.getTotal_focus_time();
+                        Log.i("hthththf", p.getTotal_focus_time()+"yes ");
                     }
                     if (p.getDate().after(theweek)){
                         w_sum+=p.getTotal_focus_time();
@@ -153,10 +160,23 @@ public class res_adapter extends RecyclerView.Adapter<res_adapter.res_holder> {
 //                focus_title.put(p.getTitle(), F_sum);
 //                rest_title.put(p.getTitle(), R_sum);
             }
-            day.setText((TimeUnit.MILLISECONDS.toMinutes(d_sum)==0 ? 1:TimeUnit.MILLISECONDS.toMinutes(d_sum))+"M");
-            week.setText((TimeUnit.MILLISECONDS.toMinutes(w_sum)==0 ? 1:TimeUnit.MILLISECONDS.toMinutes(w_sum))+"M");
-            month.setText((TimeUnit.MILLISECONDS.toMinutes(m_sum)==0 ? 1:TimeUnit.MILLISECONDS.toMinutes(m_sum))+"M");
+            if (d_sum>0){
+                day.setText((TimeUnit.MILLISECONDS.toMinutes(d_sum)==0 ? 1:TimeUnit.MILLISECONDS.toMinutes(d_sum))+"M");
+            }else {
+                day.setText(0+"M");
+            }
+            if (w_sum>0){
+                week.setText((TimeUnit.MILLISECONDS.toMinutes(w_sum)==0 ? 1:TimeUnit.MILLISECONDS.toMinutes(w_sum))+"M");
+            }else {
+                week.setText(0+"M");
+            }
+            if (m_sum>0){
+                month.setText((TimeUnit.MILLISECONDS.toMinutes(m_sum)==0 ? 1:TimeUnit.MILLISECONDS.toMinutes(m_sum))+"M");
+            }else {
+                month.setText(0+"M");
+            }
             //time.setText(note.getMin()+"");
+            ConstraintLayout.setVisibility(View.GONE);
         }
 
     }
