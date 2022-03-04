@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,12 +17,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -47,10 +51,12 @@ public class MainActivity extends AppCompatActivity  {
     static long focustime;
     static long sum_focus;
     static long sum_break;
-    //long resttime = 0;
+    LinearLayout btn_layout;
     static int curent_set=1;
     ImageView addpromo;
     Button startbtn;
+    Button Resume;
+    Button stop;
     Button stopbtn;
     MaterialDialog mDialog;
     RecyclerView recyclerView_bottom;
@@ -66,15 +72,22 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         LinearLayout bottomSheet = findViewById(R.id.design_bottom_sheet);
         recyclerView_bottom = findViewById(R.id.recyclerView_bottom);
         min_view = findViewById(R.id.min_view);
+        //FrameLayout = findViewById(R.id.bottomsh);
+
         //rest_anim = findViewById(R.id.rest_anim);
         //rest_anim.setVisibility(View.GONE);
         clock = findViewById(R.id.clock);
+        btn_layout = findViewById(R.id.btn_layout);
         startbtn = findViewById(R.id.start);
         stopbtn = findViewById(R.id.stoptbtn);
+        Resume = findViewById(R.id.resume);
+        stop = findViewById(R.id.stop);
         imageView = findViewById(R.id.imageView);
+btn_layout.setVisibility(View.GONE);
         Bundle b = getIntent().getExtras();
         if (b!=null){
             Log.i("qqqqqqqqqqq", "onCreate: ");
@@ -88,7 +101,6 @@ public class MainActivity extends AppCompatActivity  {
         curentSet.setText(curent_set+"");
         title_text = findViewById(R.id.title_text);
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-
 
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         if (sharedPref.getInt("first_time",-1)==-1){
@@ -163,8 +175,14 @@ public class MainActivity extends AppCompatActivity  {
                 }).setNegativeButton("skip", R.drawable.add_circle_24, new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
-                        if (curent_set > selected.getShort_rest_step())
+                        if (curent_set > selected.getShort_rest_step()){
                             curent_set=1;
+                            startbtn.setVisibility(View.VISIBLE);
+                            btn_layout.setVisibility(View.GONE);
+                        }else {
+                            btn_layout.setVisibility(View.VISIBLE);
+                            startbtn.setVisibility(View.GONE);
+                        }
                         curentSet.setText(curent_set+"");
                         dialogInterface.dismiss();
                     }
@@ -179,6 +197,7 @@ public class MainActivity extends AppCompatActivity  {
                 clock.startAnimation(round);
                 stopbtn.setVisibility(View.VISIBLE);
                 startbtn.setVisibility(View.GONE);//60000
+                bottomSheet.setVisibility(View.GONE);
                 starttimer(selected,"focus");
                 focusStart();
                 saved=false;
@@ -194,6 +213,12 @@ public class MainActivity extends AppCompatActivity  {
                 saved=true;
                 countDownTimer.cancel();
                 result_access.openDB();
+                curent_set=1;
+                bottomSheet.setVisibility(View.VISIBLE);
+
+                //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                init_timer(selected);
+                curentSet.setText(curent_set+"");
                 result_access.addNewresult(new result_time(selected.getTitle(),focustime,break_activi.resttime,new Date()));
                 focustime = 0 ;
                 break_activi.resttime=0;
@@ -208,16 +233,41 @@ public class MainActivity extends AppCompatActivity  {
                 finish();
             }
         });
+        Resume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clock.startAnimation(round);
+                stopbtn.setVisibility(View.VISIBLE);
+                btn_layout.setVisibility(View.GONE);
+                starttimer(selected,"focus");
+                focusStart();
+                saved=false;
+            }
+        });
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clock.clearAnimation();
+                btn_layout.setVisibility(View.GONE);
+                startbtn.setVisibility(View.VISIBLE);
+                focusStop();
+                bottomSheet.setVisibility(View.VISIBLE);
+
+                // bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                saved=true;
+                countDownTimer.cancel();
+                result_access.openDB();
+                result_access.addNewresult(new result_time(selected.getTitle(),focustime,break_activi.resttime,new Date()));
+                focustime = 0 ;
+                curent_set=1;
+                init_timer(selected);
+                curentSet.setText(curent_set+"");
+                break_activi.resttime=0;
+                result_access.closeDB();
+            }
+        });
 
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("ssssssssssss", "onRestart: ");
-    }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -232,15 +282,45 @@ public class MainActivity extends AppCompatActivity  {
 //        popup.inflate(R.menu.nav);
 //        popup.show();
 //    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         Log.i("TAG", "onMenuItemClick: ");
        switch (menuItem.getItemId()) {
             case R.id.statistics:
+                MaterialDialog Dialog;
+                Dialog = new MaterialDialog.Builder( this)
+                        .setTitle("Do you want stop pomos?")
+                        .setCancelable(true)
+                        .setPositiveButton("Yes",  new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
+                                Intent intent = new Intent(MainActivity.this,statistics.class);
+                                startActivity(intent);
+                                result_access.openDB();
+                                focusStop();
+                                countDownTimer.cancel();
+                                saved=true;
+                                result_access.addNewresult(new result_time(selected.getTitle(),sum_focus,break_activi.resttime,new Date()));
+                                result_access.closeDB();
+                                dialogInterface.dismiss();
+                            }
+                        }).setNegativeButton("No", new MaterialDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int which) {
 
-                Intent intent = new Intent(this,statistics.class);
-                startActivity(intent);
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .build();
+                if (!saved){
+                    Dialog.show();
+                }else {
+                    finish();
+                    Intent intent = new Intent(MainActivity.this,statistics.class);
+                    startActivity(intent);
+                }
+
+
               return true;
 //            case R.id.creportitem:
 //                //reportDialog.show();
@@ -273,13 +353,19 @@ public void starttimer(Activity_promo activity_promo,String type){
                     TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(activity_promo.getMin()*60000)));
             focusStop();
             mDialog.show();
-            curent_set++;
+            if (selected.getShort_rest_step()==curent_set){
+                curent_set=1;
+                init_timer(selected);
+            }
+
+            else
+                curent_set++;
+
             curentSet.setText(curent_set+"");
             clock.clearAnimation();
             stopbtn.setVisibility(View.GONE);
             startbtn.setVisibility(View.VISIBLE);
-            //save in db
-            //Log.i("dorrr", min+"  "+sec);
+
             min_view.setText(min+"");
             sec_view.setText(sec+"");
 
@@ -333,7 +419,7 @@ public static void init_timer(Activity_promo activity_promo){
         super.onDestroy();
         if (!saved){
             result_access.openDB();
-            result_access.addNewresult(new result_time(selected.getTitle(),focustime,break_activi.resttime,new Date()));
+            result_access.addNewresult(new result_time(selected.getTitle(),sum_focus,break_activi.resttime,new Date()));
             result_access.closeDB();
         }
     }

@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -31,18 +35,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class statistics extends AppCompatActivity {
     ResultDataAccess result_access = new ResultDataAccess(this);
     BarChart barChart;
     RecyclerView recyclerView;
-    private static final int MAX_X_VALUE = 7;
-    private static final int MAX_Y_VALUE = 50;
-    private static final int MIN_Y_VALUE = 5;
+    TextView no_data;
+    TextView textView7;
+    View line,line2;
     private static final int GROUPS = 3;
-    private static final String GROUP_1_LABEL = "Group 1";
-    private static final String GROUP_2_LABEL = "Group 2";
-    private static final String GROUP_3_LABEL = "Group 3";
     private static final float BAR_SPACE = 0.05f;
     private static final float BAR_WIDTH = 0.2f;
     PieChart pieChart;
@@ -50,45 +52,129 @@ public class statistics extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-         //barChart = findViewById(R.id.BarChart);
         recyclerView =findViewById(R.id.details);
-
-        //initializeBarChart(barChart);
+        no_data =findViewById(R.id.no_data);
+        line =findViewById(R.id.line);
+        line2 =findViewById(R.id.line2);
+        textView7 =findViewById(R.id.textView7);
+        pieChart = findViewById(R.id.piechart);
         result_access.openDB();
         ArrayList<result_time> arrayList = result_access.getall();
         result_access.closeDB();
-        ArrayList<result_time> clean = new ArrayList<>();
-        Map<String,result_time> clean_map = new HashMap<>();
-        Map<String, Integer> focus_title = new HashMap<>();
-        Map<String, Integer> rest_title = new HashMap<>();
-        for (result_time p:arrayList) {
-            int F_sum=0;
-            int R_sum=0;
-            for (int a = 0; a < arrayList.size(); a++) {
-                if (p.getTitle().equals(arrayList.get(a).getTitle())){
-                    Log.i("ouuoyb", "1");
-                    F_sum+=arrayList.get(a).getTotal_focus_time();
-                    R_sum+=arrayList.get(a).getTotal_rest();
+        if (arrayList.size()<1){
+            textView7.setVisibility(View.INVISIBLE);
+            no_data.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+            pieChart.setVisibility(View.INVISIBLE);
+            line.setVisibility(View.INVISIBLE);
+            line2.setVisibility(View.INVISIBLE);
+        }else {
+            textView7.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+            pieChart.setVisibility(View.VISIBLE);
+            line.setVisibility(View.VISIBLE);
+            line2.setVisibility(View.VISIBLE);
+            no_data.setVisibility(View.GONE);
+            ArrayList<result_time> clean = new ArrayList<>();
+            Map<String,result_time> clean_map = new HashMap<>();
+            Map<String, Integer> focus_title = new HashMap<>();
+            Map<String, Integer> rest_title = new HashMap<>();
+            for (result_time p:arrayList) {
+                int F_sum=0;
+                int R_sum=0;
+                for (int a = 0; a < arrayList.size(); a++) {
+                    if (p.getTitle().equals(arrayList.get(a).getTitle())){
+                        Log.i("ouuoyb", "1");
+                        F_sum+=arrayList.get(a).getTotal_focus_time();
+                        R_sum+=arrayList.get(a).getTotal_rest();
+                    }
                 }
+                clean_map.put(p.getTitle(),new result_time(p.getTitle(),F_sum,R_sum,p.getDate()));
+                focus_title.put(p.getTitle(), F_sum);
+                rest_title.put(p.getTitle(), R_sum);
             }
-            clean_map.put(p.getTitle(),new result_time(p.getTitle(),F_sum,R_sum,p.getDate()));
-            focus_title.put(p.getTitle(), F_sum);
-            rest_title.put(p.getTitle(), R_sum);
+            for (String key:clean_map.keySet() ) {
+                clean.add(new result_time(clean_map.get(key).getTitle(),clean_map.get(key).getTotal_focus_time(),clean_map.get(key).getTotal_rest(),clean_map.get(key).getDate()));
+            }
+            res_adapter ada = new res_adapter(clean,arrayList);
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
+            recyclerView.setAdapter(ada);
+
+            pieChart(arrayList);
         }
-        for (String key:clean_map.keySet() ) {
-            clean.add(new result_time(clean_map.get(key).getTitle(),clean_map.get(key).getTotal_focus_time(),clean_map.get(key).getTotal_rest(),clean_map.get(key).getDate()));
-        }
-        res_adapter ada = new res_adapter(clean,arrayList);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(ada);
-//        BarData data = createChartData(arrayList);
-//        configureChartAppearance();
-//        prepareChartData(data);
-        //GroupBarChart(arrayList);
-        pieChart = findViewById(R.id.piechart);
-        pieChart(arrayList);
+
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(statistics.this,MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void pieChart(ArrayList <result_time> arrayList){
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        String label = "";
+        Map<String, Integer> typeAmountMap = new HashMap<>();
+        int total=0;
+        for (result_time p:arrayList) {
+            int sum=0;
+            for (int a = 0; a < arrayList.size(); a++) {
+                if (p.getTitle().equals(arrayList.get(a).getTitle())){
+                    sum+=arrayList.get(a).getTotal_focus_time();
+                }
+            }
+
+            typeAmountMap.put(p.getTitle(), sum);
+        }
+
+        Description c =new Description();
+        c.setText("focus percent");
+        c.setTextColor(Color.parseColor("#FFFFFFFF"));
+        //c.setPosition(640,705);
+        pieChart.setDescription(c);
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.parseColor("#327460"));
+        colors.add(Color.parseColor("#509967"));
+        colors.add(Color.parseColor("#476567"));
+        colors.add(Color.parseColor("#890567"));
+        colors.add(Color.parseColor("#a35567"));
+        colors.add(Color.parseColor("#ff5f67"));
+        colors.add(Color.parseColor("#3ca567"));
+        colors.add(Color.parseColor("#3a5587"));
+        for (String type : typeAmountMap.keySet()) {
+            total+=typeAmountMap.get(type).floatValue();
+        }
+        //input data and fit data into pie chart entry
+        for (String type : typeAmountMap.keySet()) {
+            pieEntries.add(new PieEntry((float) calculatePercentage(typeAmountMap.get(type).floatValue(),total), type));
+        }
+        //collecting the entries with label name
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, label);
+        //setting text size of the value
+        pieDataSet.setValueTextSize(12f);
+        //providing color list for coloring different entries
+        pieDataSet.setColors(colors);
+        //grouping the data set from entry to chart
+        PieData pieData = new PieData(pieDataSet);
+
+        //showing the value of the entries, default true if not set
+        pieData.setDrawValues(true);
+        pieChart.setData(pieData);
+        String colorText = "Total " + "<font color=\"#E72A02\"><bold>" + "\n"+ (TimeUnit.MILLISECONDS.toMinutes(total)==0 ? 1:TimeUnit.MILLISECONDS.toMinutes((total)))
+               +"MIN" + "</bold></font>";
+        pieChart.setCenterText(Html.fromHtml(colorText));
+
+
+        pieChart.invalidate();
+    }
+    public double calculatePercentage(double obtained, double total) {
+        return (obtained * 100 / total);
+    }
+
+
+
 
     private void configureChartAppearance() {
         barChart.setPinchZoom(false);
@@ -99,7 +185,7 @@ public class statistics extends AppCompatActivity {
 
         XAxis xAxis = barChart.getXAxis();
         //xAxis.setGranularity(1f);
-       // xAxis.setCenterAxisLabels(true);
+        // xAxis.setCenterAxisLabels(true);
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setDrawGridLines(false);
@@ -244,7 +330,7 @@ public class statistics extends AppCompatActivity {
         //barChart.setDrawBarShadow(false);
         //barChart.getDescription().setEnabled(false);
         //barChart.setPinchZoom(false);
-       // barChart.setDrawGridBackground(true);
+        // barChart.setDrawGridBackground(true);
         // empty labels so that the names are spread evenly
         HashSet<String> s = new HashSet<>();
         s.add("");
@@ -361,58 +447,4 @@ public class statistics extends AppCompatActivity {
 
     }
 
-    public void pieChart(ArrayList <result_time> arrayList){
-        ArrayList<PieEntry> pieEntries = new ArrayList<>();
-        String label = "";
-        Map<String, Integer> typeAmountMap = new HashMap<>();
-        int total=0;
-        for (result_time p:arrayList) {
-            int sum=0;
-            for (int a = 0; a < arrayList.size(); a++) {
-                if (p.getTitle().equals(arrayList.get(a).getTitle())){
-                    sum+=arrayList.get(a).getTotal_focus_time();
-                }
-            }
-
-            typeAmountMap.put(p.getTitle(), sum);
-        }
-
-        //typeAmountMap.put("Snacks", 23000);
-        Description c =new Description();
-        c.setText("focus percent");
-        //c.setPosition(640,705);
-        pieChart.setDescription(c);
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.parseColor("#304567"));
-        colors.add(Color.parseColor("#309967"));
-        colors.add(Color.parseColor("#476567"));
-        colors.add(Color.parseColor("#890567"));
-        colors.add(Color.parseColor("#a35567"));
-        colors.add(Color.parseColor("#ff5f67"));
-        colors.add(Color.parseColor("#3ca567"));
-        colors.add(Color.parseColor("#3a5537"));
-        for (String type : typeAmountMap.keySet()) {
-            total+=typeAmountMap.get(type).floatValue();
-        }
-        //input data and fit data into pie chart entry
-        for (String type : typeAmountMap.keySet()) {
-            pieEntries.add(new PieEntry((float) calculatePercentage(typeAmountMap.get(type).floatValue(),total), type));
-        }
-
-        //collecting the entries with label name
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, label);
-        //setting text size of the value
-        pieDataSet.setValueTextSize(12f);
-        //providing color list for coloring different entries
-        pieDataSet.setColors(colors);
-        //grouping the data set from entry to chart
-        PieData pieData = new PieData(pieDataSet);
-        //showing the value of the entries, default true if not set
-        pieData.setDrawValues(true);
-        pieChart.setData(pieData);
-        pieChart.invalidate();
-    }
-    public double calculatePercentage(double obtained, double total) {
-        return (obtained * 100 / total);
-    }
 }

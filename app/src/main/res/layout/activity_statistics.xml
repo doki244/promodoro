@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_primery"
     tools:context=".statistics">
 
 
@@ -14,12 +15,13 @@
         android:layout_marginTop="@dimen/_3sdp"
         android:padding="@dimen/_3sdp"
         android:text="Overview"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
+        android:id="@+id/line"
         android:layout_width="@dimen/_290sdp"
         android:layout_height="@dimen/_1sdp"
         android:background="@color/colorPrimary"
@@ -32,6 +34,7 @@
         android:id="@+id/piechart"
         android:layout_width="416dp"
         android:layout_height="274dp"
+
         android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -40,9 +43,10 @@
 
     <View
 
+        android:id="@+id/line2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_7sdp"
 
+        android:layout_height="@dimen/_7sdp"
         android:background="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -64,5 +68,19 @@
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/no_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_90sdp"
+        android:text="No data yet"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_25sdp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 public class Activity_promo {
     private String title;
-    private int min,short_rest,long_rest,Short_rest_step;
+    private int min,short_rest,long_rest,Short_rest_step,id;
 
     public Activity_promo(String title, int min, int short_rest, int long_rest, int short_rest_step) {
         this.title = title;
@@ -12,6 +12,22 @@ public class Activity_promo {
         this.short_rest = short_rest;
         this.long_rest = long_rest;
         Short_rest_step = short_rest_step;
+    }
+    public Activity_promo(String title, int min, int short_rest, int long_rest, int short_rest_step,int id) {
+        this.title = title;
+        this.min = min;
+        this.short_rest = short_rest;
+        this.long_rest = long_rest;
+        Short_rest_step = short_rest_step;
+        this.id= id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

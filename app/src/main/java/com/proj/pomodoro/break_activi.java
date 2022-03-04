@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class break_activi extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_break);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         sec_view = findViewById(R.id.sec_view);
         skip = findViewById(R.id.Skip);
         min_view = findViewById(R.id.min_view);
@@ -90,13 +92,7 @@ public class break_activi extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-//        if(!MainActivity.saved){
-//            result_access.openDB();
-//            result_access.addNewresult(new result_time(MainActivity.selected.getTitle(),MainActivity.focustime,break_activi.resttime,new Date()));
-//            MainActivity.focustime = 0 ;
-//            resttime=0;
-//            result_access.closeDB();
-//
-//        }
+        breakStop();
+        finish();
     }
 }

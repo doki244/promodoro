@@ -45,7 +45,7 @@ public class ActivityDataAccess {
     }
     @SuppressLint("Range")
     public ArrayList<Activity_promo> getall() {
-        String COLOR ;
+        int id ;
         String TITLE;
         int LONG_REST;
         int  SHORT_REST ;
@@ -60,14 +60,15 @@ public class ActivityDataAccess {
                 SHORT_REST = cursor.getInt(cursor.getColumnIndex(DB.SHORT_REST));
                 SHORT_REST_STEP = cursor.getInt(cursor.getColumnIndex(DB.SHORT_REST_STEP));
                 MIN = cursor.getInt(cursor.getColumnIndex(DB.MIN));
+                id = cursor.getInt(cursor.getColumnIndex(DB.ID));
                 TITLE = cursor.getString(cursor.getColumnIndex(DB.TITLE));
-                arrayList.add(new Activity_promo(TITLE,MIN,SHORT_REST,LONG_REST,SHORT_REST_STEP));
+                arrayList.add(new Activity_promo(TITLE,MIN,SHORT_REST,LONG_REST,SHORT_REST_STEP,id));
 
             }while (cursor.moveToNext());
         }
         return arrayList;
     }
-    public boolean deleteBYid(String id) {
+    public boolean deleteBYid(int id) {
         try {
             database.delete(DB.TABLE_NAME, "id = " + id, null);
             return true;

@@ -8,7 +8,7 @@
     android:layout_marginStart="@dimen/_12sdp"
     android:layout_marginTop="@dimen/_12sdp"
     android:background="@drawable/items"
-    android:backgroundTint="#0c243c">
+    android:backgroundTint="@color/main_primery">
 
 
     <TextView

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.math.MathUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.ParseException;
@@ -120,9 +121,11 @@ public class res_adapter extends RecyclerView.Adapter<res_adapter.res_holder> {
             //title.setText(res.getTitle());
             //res.getDate();
             title.setText(res.getTitle());
-            total_focus.setText((TimeUnit.MILLISECONDS.toMinutes(res.getTotal_focus_time())==0 ? 1:TimeUnit.MILLISECONDS.toMinutes(res.getTotal_focus_time()))+"M");
-            total_rest.setText((TimeUnit.MILLISECONDS.toMinutes(res.getTotal_rest())==0 ? 1:TimeUnit.MILLISECONDS.toMinutes(res.getTotal_rest()))+"M");
+            total_focus.setText((TimeUnit.MILLISECONDS.toMinutes(res.getTotal_focus_time())==0 ? 1:TimeUnit.MILLISECONDS.toMinutes((res.getTotal_focus_time())))+"M");
+            if (res.getTotal_rest()>0)
+                total_rest.setText((TimeUnit.MILLISECONDS.toMinutes(res.getTotal_rest())==0 ? 1:TimeUnit.MILLISECONDS.toMinutes(res.getTotal_rest()))+"M");
             //today
+
             Date date = new Date();
             String time_str = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(date);
             Date theday = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH).parse(time_str);
