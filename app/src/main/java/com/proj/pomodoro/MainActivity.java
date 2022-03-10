@@ -40,7 +40,7 @@ import dev.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
 public class MainActivity extends AppCompatActivity  {
     Animation round;
-    Animation alpha;
+    Animation alpha,roun,reve_roun;
     Animation btn_anim;
     ImageView clock;
     static TextView min_view,sec_view ,title_text,total_set;
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity  {
     LinearLayout btn_layout;
     static int curent_set=1;
     ImageView addpromo;
+    ImageView imageView222;
     Button startbtn;
     Button Resume;
     Button stop;
@@ -76,10 +77,6 @@ public class MainActivity extends AppCompatActivity  {
         LinearLayout bottomSheet = findViewById(R.id.design_bottom_sheet);
         recyclerView_bottom = findViewById(R.id.recyclerView_bottom);
         min_view = findViewById(R.id.min_view);
-        //FrameLayout = findViewById(R.id.bottomsh);
-
-        //rest_anim = findViewById(R.id.rest_anim);
-        //rest_anim.setVisibility(View.GONE);
         clock = findViewById(R.id.clock);
         btn_layout = findViewById(R.id.btn_layout);
         startbtn = findViewById(R.id.start);
@@ -87,13 +84,20 @@ public class MainActivity extends AppCompatActivity  {
         Resume = findViewById(R.id.resume);
         stop = findViewById(R.id.stop);
         imageView = findViewById(R.id.imageView);
-btn_layout.setVisibility(View.GONE);
+        round = AnimationUtils.loadAnimation(this,R.anim.round);
+        alpha = AnimationUtils.loadAnimation(this,R.anim.alpha);
+
+        btn_anim = AnimationUtils.loadAnimation(this,R.anim.btn);
+
+        btn_layout.setVisibility(View.GONE);
         Bundle b = getIntent().getExtras();
         if (b!=null){
             Log.i("qqqqqqqqqqq", "onCreate: ");
             if (b.get("break_time")!=null)
                 break_time=b.getBoolean("break_time");
         }
+        imageView222 = findViewById(R.id.imageView222);
+
         sec_view = findViewById(R.id.sec_view);
         addpromo = findViewById(R.id.addpromo);
         total_set = findViewById(R.id.total_set);
@@ -101,7 +105,24 @@ btn_layout.setVisibility(View.GONE);
         curentSet.setText(curent_set+"");
         title_text = findViewById(R.id.title_text);
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED ){
+                    roun = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.roun);
+                    imageView222.startAnimation(roun);
+                   // Toast.makeText(getApplicationContext(), "onStateChanged() is called. in onSlide()", Toast.LENGTH_SHORT).show();
+                }else if (newState == BottomSheetBehavior.STATE_COLLAPSED){
+                    reve_roun = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.reverse_roun);
+                    imageView222.startAnimation(reve_roun);
+                }
+            }
 
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // React to dragging events
+            }
+        });
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         if (sharedPref.getInt("first_time",-1)==-1){
             access.openDB();
@@ -124,20 +145,12 @@ btn_layout.setVisibility(View.GONE);
         access.openDB();
         ArrayList<Activity_promo> arrayList = access.getall();
         access.closeDB();
-
         Log.i("TAG", arrayList.toString());
-
-
         if (break_time){
-            //rest_anim.setVisibility(View.VISIBLE);
             clock.setVisibility(View.INVISIBLE);
             imageView.setVisibility(View.INVISIBLE);
-
         }
-        round = AnimationUtils.loadAnimation(this,R.anim.round);
-        alpha = AnimationUtils.loadAnimation(this,R.anim.alpha);
-        btn_anim = AnimationUtils.loadAnimation(this,R.anim.btn);
-        startbtn.startAnimation(btn_anim);
+                startbtn.startAnimation(btn_anim);
         imageView.startAnimation(alpha);
         clock.startAnimation(alpha);
         stopbtn.setVisibility(View.GONE);
@@ -146,33 +159,16 @@ btn_layout.setVisibility(View.GONE);
                 .setMessage("Enjoying a rest with a cup of tea")
                 .setAnimation(R.raw.breath)
                 .setCancelable(false)
-                .setPositiveButton("Start", R.drawable.add_circle_24, new MaterialDialog.OnClickListener() {
+                .setPositiveButton("Start", new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
-                        //breakStart();
                         break_time=true;
                         Intent intent =new Intent(MainActivity.this,break_activi.class);
-                        //getIntent().putExtra("break_time",true);
                         startActivity(intent);
                         dialogInterface.dismiss();
-//                        countDownTimer = new CountDownTimer(selected.getShort_rest()*60000, 1000) {
-//
-//                            public void onTick(long millisUntilFinished) {
-//                                int min = (int) TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
-//                                int sec = (int) (TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) -
-//                                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
-//                                //Log.i("dorrr", min+"  "+sec);
-//                                //min_view.setText(min+"");
-//                                //sec_view.setText(sec+"");
-//
-//                            }
-//                            public void onFinish() {
-//                                breakStop();
-//                                dialogInterface.dismiss();
-//                            }
-//                        }.start();
+
                     }
-                }).setNegativeButton("skip", R.drawable.add_circle_24, new MaterialDialog.OnClickListener() {
+                }).setNegativeButton("skip", new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         if (curent_set > selected.getShort_rest_step()){
@@ -216,7 +212,6 @@ btn_layout.setVisibility(View.GONE);
                 curent_set=1;
                 bottomSheet.setVisibility(View.VISIBLE);
 
-                //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 init_timer(selected);
                 curentSet.setText(curent_set+"");
                 result_access.addNewresult(new result_time(selected.getTitle(),focustime,break_activi.resttime,new Date()));
@@ -252,7 +247,6 @@ btn_layout.setVisibility(View.GONE);
                 startbtn.setVisibility(View.VISIBLE);
                 focusStop();
                 bottomSheet.setVisibility(View.VISIBLE);
-
                 // bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 saved=true;
                 countDownTimer.cancel();
@@ -276,12 +270,6 @@ btn_layout.setVisibility(View.GONE);
         return true;
     }
 
-//    public void showPopup(View v) {
-//        PopupMenu popup = new PopupMenu(this, v);
-//        popup.setOnMenuItemClickListener(this);
-//        popup.inflate(R.menu.nav);
-//        popup.show();
-//    }
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         Log.i("TAG", "onMenuItemClick: ");
@@ -319,17 +307,7 @@ btn_layout.setVisibility(View.GONE);
                     Intent intent = new Intent(MainActivity.this,statistics.class);
                     startActivity(intent);
                 }
-
-
               return true;
-//            case R.id.creportitem:
-//                //reportDialog.show();
-//                return true;
-//            case R.id.cclearhistoryitem:
-//               // clehisDialog.show();
-//                return true;
-//            default:
-//                return false;
         }
         return false;
     }
@@ -357,18 +335,14 @@ public void starttimer(Activity_promo activity_promo,String type){
                 curent_set=1;
                 init_timer(selected);
             }
-
             else
                 curent_set++;
-
             curentSet.setText(curent_set+"");
             clock.clearAnimation();
             stopbtn.setVisibility(View.GONE);
             startbtn.setVisibility(View.VISIBLE);
-
             min_view.setText(min+"");
             sec_view.setText(sec+"");
-
         }
 
     }.start();
@@ -384,7 +358,6 @@ public static void init_timer(Activity_promo activity_promo){
     total_set.setText(activity_promo.getShort_rest_step()+"");
     sec_view.setText(sec+"");
     title_text.setText(activity_promo.getTitle());
-
 }
 
     public void focusStart() {
@@ -410,8 +383,19 @@ public static void init_timer(Activity_promo activity_promo){
     @Override
     protected void onStop() {
         super.onStop();
+    }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (curent_set > selected.getShort_rest_step()){
+            curent_set=1;
+            startbtn.setVisibility(View.VISIBLE);
+            btn_layout.setVisibility(View.GONE);
+        }else {
+            btn_layout.setVisibility(View.VISIBLE);
+            startbtn.setVisibility(View.GONE);
+        }
     }
 
     @Override

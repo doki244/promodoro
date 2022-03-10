@@ -24,7 +24,7 @@
                 android:layout_height="53dp"
                 android:layout_marginBottom="@dimen/_86sdp"
                 android:background="@drawable/bgbtngreen"
-                android:backgroundTint="@null"
+                app:backgroundTint="@null"
                 android:text="Start"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold"
@@ -33,7 +33,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
-
+            <Button
+                android:id="@+id/stoptbtn"
+                android:layout_width="269dp"
+                android:layout_height="53dp"
+                android:layout_marginBottom="@dimen/_86sdp"
+                android:background="@drawable/bgbtnred"
+                android:text="stop"
+                android:textSize="@dimen/_17sdp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
             <TextView
                 android:id="@+id/sec_view"
                 android:layout_width="74dp"
@@ -93,21 +107,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/clock" />
 
 
-            <Button
-                android:id="@+id/stoptbtn"
-                android:layout_width="269dp"
-                android:layout_height="53dp"
-                android:layout_marginBottom="@dimen/_86sdp"
-                android:background="@drawable/bgbtnred"
-                android:text="stop"
-                android:textSize="@dimen/_17sdp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+
 
 
             <TextView
@@ -175,6 +175,7 @@
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="53dp"
                     android:text="Resume"
+                    app:backgroundTint="@null"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:id="@+id/resume"
@@ -187,6 +188,8 @@
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="53dp"
                     android:text="Stop"
+                    app:backgroundTint="@null"
+
                     android:textStyle="bold"
                     android:background="@drawable/bgbtnred"
                     android:textColor="@color/white"

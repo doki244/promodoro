@@ -19,55 +19,33 @@
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         app:behavior_hideable="false"
         android:id="@+id/design_bottom_sheet"
-        app:behavior_peekHeight="@dimen/_26sdp">
+        app:behavior_peekHeight="@dimen/_35sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp">
+            android:layout_height="@dimen/_55sdp">
 
             <ImageView
                 android:id="@+id/addpromo"
                 android:layout_width="27dp"
                 android:layout_height="26dp"
-                android:layout_marginStart="128dp"
-                android:layout_marginTop="32dp"
-                app:layout_constraintStart_toEndOf="@+id/view"
+                android:layout_marginTop="@dimen/_34sdp"
+
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/add_circle_24" />
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_5sdp"
-                android:layout_gravity="center"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
+            <ImageView
+                android:id="@+id/imageView222"
+                android:layout_width="52dp"
+                android:layout_height="47dp"
+                android:layout_marginBottom="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_5sdp"
-                android:layout_gravity="center"
-                android:layout_marginTop="4dp"
-                android:background="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
-
-            <View
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_5sdp"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
+                app:srcCompat="@drawable/arrow_up" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

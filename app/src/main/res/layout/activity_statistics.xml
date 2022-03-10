@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_primery"
+    android:background="#96bed4"
     tools:context=".statistics">
 
 
@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_3sdp"
         android:padding="@dimen/_3sdp"
+        android:textSize="@dimen/_19sdp"
         android:text="Overview"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -34,7 +35,6 @@
         android:id="@+id/piechart"
         android:layout_width="416dp"
         android:layout_height="274dp"
-
         android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

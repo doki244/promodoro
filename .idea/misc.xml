@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/drawable-v24/circle.xml" value="0.21822916666666667" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/drawable/add_circle_24.xml" value="0.26205128205128203" />
+        <entry key="..\:/work/code/android/pomodoro/app/src/main/res/drawable/arrow_up.xml" value="0.1885" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/drawable/bgbtngreen.xml" value="0.18020833333333333" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/drawable/bgbtnred.xml" value="0.18020833333333333" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/drawable/bottom_sheet.xml" value="0.13020833333333334" />
@@ -13,7 +14,7 @@
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/activity_break.xml" value="0.176" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/activity_statistics.xml" value="0.2" />
-        <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/bottom_sheet.xml" value="0.2" />
+        <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/bottom_sheet.xml" value="0.18055555555555555" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/content_main.xml" value="0.25" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/item.xml" value="0.6" />
         <entry key="..\:/work/code/android/pomodoro/app/src/main/res/layout/row.xml" value="0.25" />

@@ -99,11 +99,8 @@ public class statistics extends AppCompatActivity {
             res_adapter ada = new res_adapter(clean,arrayList);
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
             recyclerView.setAdapter(ada);
-
             pieChart(arrayList);
         }
-
-
     }
 
     @Override
@@ -125,19 +122,17 @@ public class statistics extends AppCompatActivity {
                     sum+=arrayList.get(a).getTotal_focus_time();
                 }
             }
-
             typeAmountMap.put(p.getTitle(), sum);
         }
-
         Description c =new Description();
         c.setText("focus percent");
-        c.setTextColor(Color.parseColor("#FFFFFFFF"));
+        c.setTextColor(Color.parseColor("#000000"));
         //c.setPosition(640,705);
         pieChart.setDescription(c);
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.parseColor("#327460"));
-        colors.add(Color.parseColor("#509967"));
-        colors.add(Color.parseColor("#476567"));
+        colors.add(Color.parseColor("#64b5f6"));
+        colors.add(Color.parseColor("#03a9f4"));
+        colors.add(Color.parseColor("#3f51b5"));
         colors.add(Color.parseColor("#890567"));
         colors.add(Color.parseColor("#a35567"));
         colors.add(Color.parseColor("#ff5f67"));
@@ -165,6 +160,7 @@ public class statistics extends AppCompatActivity {
         String colorText = "Total " + "<font color=\"#E72A02\"><bold>" + "\n"+ (TimeUnit.MILLISECONDS.toMinutes(total)==0 ? 1:TimeUnit.MILLISECONDS.toMinutes((total)))
                +"MIN" + "</bold></font>";
         pieChart.setCenterText(Html.fromHtml(colorText));
+        pieChart.setCenterTextSize(14);
 
 
         pieChart.invalidate();
@@ -230,7 +226,7 @@ public class statistics extends AppCompatActivity {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setValueFormatter(new MyXAxisValueFormatter());
+        //xAxis.setValueFormatter(new MyXAxisValueFormatter());
         ArrayList<BarEntry> values1 = new ArrayList<>();
         ArrayList<BarEntry> values2 = new ArrayList<>();
         float[] valOne = new float[map_focus_sum.size()];
