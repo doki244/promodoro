@@ -8,8 +8,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +38,7 @@
                 android:id="@+id/imageView222"
                 android:layout_width="52dp"
                 android:layout_height="47dp"
-                android:layout_marginBottom="18dp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -60,13 +58,6 @@
             android:paddingEnd="@dimen/_12sdp"
             android:paddingBottom="@dimen/_12sdp"
             />
-
-
-
-
-
-
-
 
     </LinearLayout>
 

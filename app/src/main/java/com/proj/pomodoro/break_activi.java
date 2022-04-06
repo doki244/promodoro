@@ -35,6 +35,7 @@ public class break_activi extends AppCompatActivity {
         skip = findViewById(R.id.Skip);
         min_view = findViewById(R.id.min_view);
         Log.i("curent_set", curent_set+"");
+        curent_set++;
         if (curent_set > MainActivity.selected.getShort_rest_step()) {
             curent_set=1;
             starttimer(MainActivity.selected.getLong_rest());
@@ -80,6 +81,7 @@ public class break_activi extends AppCompatActivity {
     public void breakStop() {
         customHandler.removeCallbacks(TimerThread);
         sum_break+=resttime;
+        resttime=0;
     }
 
     private Runnable TimerThread = new Runnable() {

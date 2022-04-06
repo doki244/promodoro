@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity  {
     long startTime;
     static long focustime;
     static long sum_focus;
-    static long sum_break;
+   // static long sum_break;
     LinearLayout btn_layout;
     static int curent_set=1;
     ImageView addpromo;
@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity  {
                 }).setNegativeButton("skip", new MaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
+                        curent_set++;
                         if (curent_set > selected.getShort_rest_step()){
                             curent_set=1;
                             startbtn.setVisibility(View.VISIBLE);
@@ -214,8 +215,10 @@ public class MainActivity extends AppCompatActivity  {
 
                 init_timer(selected);
                 curentSet.setText(curent_set+"");
-                result_access.addNewresult(new result_time(selected.getTitle(),focustime,break_activi.resttime,new Date()));
+                result_access.addNewresult(new result_time(selected.getTitle(),sum_focus,break_activi.sum_break,new Date()));
                 focustime = 0 ;
+                break_activi.sum_break=0;
+                sum_focus=0;
                 break_activi.resttime=0;
                 result_access.closeDB();
             }
@@ -251,12 +254,14 @@ public class MainActivity extends AppCompatActivity  {
                 saved=true;
                 countDownTimer.cancel();
                 result_access.openDB();
-                result_access.addNewresult(new result_time(selected.getTitle(),focustime,break_activi.resttime,new Date()));
+                result_access.addNewresult(new result_time(selected.getTitle(),sum_focus,break_activi.sum_break,new Date()));
                 focustime = 0 ;
+                sum_focus=0;
                 curent_set=1;
                 init_timer(selected);
                 curentSet.setText(curent_set+"");
                 break_activi.resttime=0;
+                break_activi.sum_break=0;
                 result_access.closeDB();
             }
         });
@@ -288,7 +293,9 @@ public class MainActivity extends AppCompatActivity  {
                                 focusStop();
                                 countDownTimer.cancel();
                                 saved=true;
-                                result_access.addNewresult(new result_time(selected.getTitle(),sum_focus,break_activi.resttime,new Date()));
+                                result_access.addNewresult(new result_time(selected.getTitle(),sum_focus,break_activi.sum_break,new Date()));
+                                break_activi.resttime=0;
+                                break_activi.sum_break=0;
                                 result_access.closeDB();
                                 dialogInterface.dismiss();
                             }
@@ -331,12 +338,12 @@ public void starttimer(Activity_promo activity_promo,String type){
                     TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(activity_promo.getMin()*60000)));
             focusStop();
             mDialog.show();
-            if (selected.getShort_rest_step()==curent_set){
-                curent_set=1;
-                init_timer(selected);
-            }
-            else
-                curent_set++;
+//            curent_set++;
+//            if (selected.getShort_rest_step()<curent_set){
+//                curent_set=1;
+//                init_timer(selected);
+//            }
+
             curentSet.setText(curent_set+"");
             clock.clearAnimation();
             stopbtn.setVisibility(View.GONE);
@@ -353,7 +360,7 @@ public static void init_timer(Activity_promo activity_promo){
             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(activity_promo.getMin()*60000)));
     //Log.i("dorrr", min+"  "+sec);
     sum_focus = 0;
-    sum_break=0;
+    //sum_break=0;
     min_view.setText(min+"");
     total_set.setText(activity_promo.getShort_rest_step()+"");
     sec_view.setText(sec+"");
@@ -388,14 +395,16 @@ public static void init_timer(Activity_promo activity_promo){
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (curent_set > selected.getShort_rest_step()){
-            curent_set=1;
+        if (curent_set == 1){
+            //curent_set=1;
             startbtn.setVisibility(View.VISIBLE);
             btn_layout.setVisibility(View.GONE);
         }else {
             btn_layout.setVisibility(View.VISIBLE);
             startbtn.setVisibility(View.GONE);
         }
+        curentSet.setText(curent_set+"");
+
     }
 
     @Override
@@ -403,7 +412,7 @@ public static void init_timer(Activity_promo activity_promo){
         super.onDestroy();
         if (!saved){
             result_access.openDB();
-            result_access.addNewresult(new result_time(selected.getTitle(),sum_focus,break_activi.resttime,new Date()));
+            result_access.addNewresult(new result_time(selected.getTitle(),sum_focus,break_activi.sum_break,new Date()));
             result_access.closeDB();
         }
     }

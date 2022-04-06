@@ -147,7 +147,6 @@ public class res_adapter extends RecyclerView.Adapter<res_adapter.res_holder> {
             for (result_time p:dirty_result) {
                 if (p.getTitle().equals(res.getTitle())){
                     if (p.getDate().equals(theday)){
-
                         d_sum+=p.getTotal_focus_time();
                         Log.i("hthththf", p.getTotal_focus_time()+"yes ");
                     }
